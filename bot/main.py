@@ -48,8 +48,8 @@ async def start_poll(message: types.Message):
 
 
 @router.message(F.text.lower() == "заказать аромат")  # Переделать
-async def get_list(message: types.Message):
-    pass
+async def get_contacts(message: types.Message):
+    await message.reply("Конечно!\nДля заказа напиши @obnulai и прикрепи желаемый результат теста")
 
 
 if __name__ == "__main__":
