@@ -119,6 +119,10 @@ class ResultImage:
                         / fontimage.height*fontimage.width)
         new_height = perfume_title_place_size[1]
 
+        if len(title) < 10:
+            new_width = fontimage.width * 2
+            new_height = fontimage.height * 2
+
         fontimage = fontimage.resize((new_width, new_height))
 
         template.paste((0, 0, 0),
