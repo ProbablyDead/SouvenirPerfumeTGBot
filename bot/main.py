@@ -1,7 +1,5 @@
 import asyncio
 import logging
-from aiogram.fsm.state import State, StatesGroup
-from aiogram.fsm.context import FSMContext
 from poll import router as pr
 from aiogram import Router
 from poll import start_polls, get_dist
@@ -9,8 +7,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram import F
 from aiogram.filters import Command
 from aiogram.enums import ParseMode
-from data.config import BOT_TOKEN
-from aiogram.utils.keyboard import InlineKeyboardBuilder
+from config.token import BOT_TOKEN
 
 logging.basicConfig(level=logging.INFO)
 
@@ -48,13 +45,12 @@ async def cmd_start(message: types.Message):
 async def start_poll(message: types.Message):
     id = message.from_user.id
     dist[f"{id}" + "_0"] = "joined"  # не терять
-    await message.answer(f"{dist[f"{id}" + "_0"]}")
+    await message.answer(f"{id}" + "_0")
     await start_polls(message)
 
 
 @router.message(F.text.lower() == "заказать аромат")  # Переделать
 async def get_list(message: types.Message):
-    id = message.from_user.id
     for key in dist:
         await message.answer(f"{key}" + ": " + f"{dist[key]}")
 
