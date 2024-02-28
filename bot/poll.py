@@ -37,10 +37,10 @@ async def start_polls(message: types.Message):
 
     await message.answer("""
     <b>Выберите утверждение, которое наиболее близко вам:</b>
-    \t1) Я живу в удовольствие, никуда не тороплюсь
-    \t2) Моя жизнь полна ярких красок, каждый день словно новая страница в жизни, я могу уехать куда хочу когда захочу
-    \t3) Я ценю уют и комфорт, не гонюсь за деньгами и успехом, скорее, семья важнее всего для меня
-    \t4) Я работаю для своего будущего, делаю успешную карьеру
+    \t1. Я живу в удовольствие, никуда не тороплюсь
+    \t2. Моя жизнь полна ярких красок, каждый день словно новая страница в жизни, я могу уехать куда хочу когда захочу
+    \t3. Я ценю уют и комфорт, не гонюсь за деньгами и успехом, скорее, семья важнее всего для меня
+    \t4. Я работаю для своего будущего, делаю успешную карьеру
     """, reply_markup=poll1())
 
 
@@ -55,10 +55,10 @@ async def update_poll(message: types.Message, text: str, keyboard=None):
 @router.callback_query(F.data.startswith("var1_"))
 async def callbacks_var1(callback: types.CallbackQuery):
     await update_poll(callback.message, """<b>Мой любимый цветок в парфюме: </b>
-    \tРозы, пионы
-    \tЛилии, иланг-иланг
-    \tЖасмин, мята
-    \tНе люблю цветы, скорее, что-то более ягодное
+    \t1. Розы, пионы
+    \t2. Лилии, иланг-иланг
+    \t3. Жасмин, мята
+    \t4. Не люблю цветы, скорее, что-то более ягодное
     """, poll2())
 
     await callback.answer()
@@ -69,10 +69,10 @@ async def callbacks_var2(callback: types.CallbackQuery):
     update_db_str(callback)
 
     await update_poll(callback.message, """<b>Какой десерт ты выберешь?</b>
-    \tБулочка с корицей
-    \tЧизкейк с соленой карамелью
-    \tЛимонно-мятный сорбет
-    \tСигарету с кофе, пожалуйста!
+    \t1. Булочка с корицей
+    \t2. Чизкейк с соленой карамелью
+    \t3. Лимонно-мятный сорбет
+    \t4. Сигарету с кофе, пожалуйста!
     """, poll3())
 
     await callback.answer()
@@ -82,10 +82,10 @@ async def callbacks_var2(callback: types.CallbackQuery):
 async def callbacks_var3(callback: types.CallbackQuery):
     update_db_str(callback)
     await update_poll(callback.message, """<b>Что тебе нравится в парфюмерии больше всего?</b>
-    \tСтойкость и шлейфовость 
-    \tНежность и деликатность
-    \tСвежесть, необычные ароматы 
-    \tТяжелые, древесные ароматы
+    \t1. Стойкость и шлейфовость 
+    \t2. Нежность и деликатность
+    \t3. Свежесть, необычные ароматы 
+    \t4. Тяжелые, древесные ароматы
     """, poll4())
 
     await callback.answer()
@@ -95,10 +95,10 @@ async def callbacks_var3(callback: types.CallbackQuery):
 async def callbacks_var4(callback: types.CallbackQuery):
     update_db_str(callback)
     await update_poll(callback.message, """<b>Какое твоё любимое мороженое?</b>
-    \tФисташка
-    \tПломбир
-    \tШоколадное
-    \tФруктовый сорбет
+    \t1. Фисташка
+    \t2. Пломбир
+    \t3. Шоколадное
+    \t4. Фруктовый сорбет
     """, poll5())
 
     await callback.answer()
@@ -108,10 +108,10 @@ async def callbacks_var4(callback: types.CallbackQuery):
 async def callbacks_var5(callback: types.CallbackQuery):
     update_db_str(callback)
     await update_poll(callback.message, """<b>Любимое время года?</b>
-    \tЗима 
-    \tОсень
-    \tЛето
-    \tВесна
+    \t1. Зима 
+    \t2. Осень
+    \t3. Лето
+    \t4. Весна
     """, poll6())
 
     await callback.answer()
@@ -120,10 +120,10 @@ async def callbacks_var5(callback: types.CallbackQuery):
 @router.callback_query(F.data.startswith("var6_"))
 async def callbacks_var6(callback: types.CallbackQuery):
     await update_poll(callback.message, """<b>Где бы ты хотел находиться прямо сейчас?</b>
-    \tГоры
-    \tМоре
-    \tГород
-    \tДеревня
+    \t1. Горы
+    \t2. Море
+    \t3. Город
+    \t4. Деревня
     """, poll7())
 
     await callback.answer()
@@ -133,10 +133,10 @@ async def callbacks_var6(callback: types.CallbackQuery):
 async def callbacks_var7(callback: types.CallbackQuery):
     update_db_str(callback)
     await update_poll(callback.message, """<b>Какую еду предпочитаешь?</b>
-    \tСладкую
-    \tСоленую
-    \tОструю
-    \tПряную
+    \t1. Сладкую
+    \t2. Соленую
+    \t3. Острую
+    \t4. Пряную
     """, poll8())
 
     await callback.answer()
@@ -146,11 +146,10 @@ async def callbacks_var7(callback: types.CallbackQuery):
 async def callbacks_var8(callback: types.CallbackQuery):
     update_db_str(callback)
     await update_poll(callback.message, """<b>Кто ты по психотипу?</b>
-    \tХолерик
-    \tСангвиник
-    \tФлегматик
-    \tМеланхолик
-    """, poll9())
+    \t1. Холерик
+    \t2. Сангвиник
+    \t3. Флегматик
+    \t4. Меланхолик""", poll9())
 
     await callback.answer()
 
@@ -158,10 +157,10 @@ async def callbacks_var8(callback: types.CallbackQuery):
 @router.callback_query(F.data.startswith("var9_"))
 async def callbacks_var9(callback: types.CallbackQuery):
     await update_poll(callback.message, """<b>Какие цвета тебе нравятся больше?</b>
-    \tЯркие
-    \tТемные
-    \tПриглушенные
-    \tПастельные
+    \t1. Яркие
+    \t2. Темные
+    \t3. Приглушенные
+    \t4. Пастельные
     """, poll10())
 
     await callback.answer()
@@ -202,15 +201,15 @@ def poll1():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="1)", callback_data="var1_"),
+                text="1", callback_data="var1_"),
             types.InlineKeyboardButton(
-                text="2)", callback_data="var1_")
+                text="2", callback_data="var1_")
         ],
         [
             types.InlineKeyboardButton(
-                text="3)", callback_data="var1_"),
+                text="3", callback_data="var1_"),
             types.InlineKeyboardButton(
-                text="4)", callback_data="var1_")
+                text="4", callback_data="var1_")
         ]
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
@@ -221,15 +220,15 @@ def poll2():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="Розы, пионы", callback_data="var2_rose"),
+                text="1", callback_data="var2_rose"),
             types.InlineKeyboardButton(
-                text="Лилии, иланг-иланг", callback_data="var2_lily")
+                text="2", callback_data="var2_lily")
         ],
         [
             types.InlineKeyboardButton(
-                text="Жасмин, мята", callback_data="var2_jasmine"),
+                text="3", callback_data="var2_jasmine"),
             types.InlineKeyboardButton(
-                text="🍓", callback_data="var2_berry")
+                text="4", callback_data="var2_berry")
         ]
     ]
 
@@ -241,15 +240,15 @@ def poll3():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="Булочка с корицей", callback_data="var3_cinnamon"),
+                text="1", callback_data="var3_cinnamon"),
             types.InlineKeyboardButton(
-                text="Чизкейк с соленой карамелью", callback_data="var3_caramel")
+                text="2", callback_data="var3_caramel")
         ],
         [
             types.InlineKeyboardButton(
-                text="Лимонно-мятный сорбет", callback_data="var3_lemon"),
+                text="3", callback_data="var3_lemon"),
             types.InlineKeyboardButton(
-                text="Сигарету с кофе, пожалуйста!", callback_data="var3_cigarette")
+                text="4", callback_data="var3_cigarette")
         ]
     ]
 
@@ -261,15 +260,15 @@ def poll4():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="вариант 1", callback_data="var4_cognac"),
+                text="1", callback_data="var4_cognac"),
             types.InlineKeyboardButton(
-                text="вариант 2", callback_data="var4_powder")
+                text="2", callback_data="var4_powder")
         ],
         [
             types.InlineKeyboardButton(
-                text="вариант 3", callback_data="var4_citrus"),
+                text="3", callback_data="var4_citrus"),
             types.InlineKeyboardButton(
-                text="вариант 4", callback_data="var4_tree")
+                text="4", callback_data="var4_tree")
         ]
     ]
 
@@ -281,15 +280,15 @@ def poll5():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="вариант 1", callback_data="var5_pistachios"),
+                text="1", callback_data="var5_pistachios"),
             types.InlineKeyboardButton(
-                text="вариант 2", callback_data="var5_vanilla")
+                text="2", callback_data="var5_vanilla")
         ],
         [
             types.InlineKeyboardButton(
-                text="вариант 3", callback_data="var5_chocolate"),
+                text="3", callback_data="var5_chocolate"),
             types.InlineKeyboardButton(
-                text="вариант 4", callback_data="var5_mango")
+                text="4", callback_data="var5_mango")
         ]
     ]
 
@@ -301,15 +300,15 @@ def poll6():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="вариант 1", callback_data="var6_"),
+                text="1", callback_data="var6_"),
             types.InlineKeyboardButton(
-                text="вариант 2", callback_data="var6_")
+                text="2", callback_data="var6_")
         ],
         [
             types.InlineKeyboardButton(
-                text="вариант 3", callback_data="var6_"),
+                text="3", callback_data="var6_"),
             types.InlineKeyboardButton(
-                text="вариант 4", callback_data="var6_")
+                text="4", callback_data="var6_")
         ]
     ]
 
@@ -321,15 +320,15 @@ def poll7():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="вариант 1", callback_data="var7_wind"),
+                text="1", callback_data="var7_wind"),
             types.InlineKeyboardButton(
-                text="вариант 2", callback_data="var7_breeze")
+                text="2", callback_data="var7_breeze")
         ],
         [
             types.InlineKeyboardButton(
-                text="вариант 3", callback_data="var7_bedsheets"),
+                text="3", callback_data="var7_bedsheets"),
             types.InlineKeyboardButton(
-                text="вариант 4", callback_data="var7_meadow")
+                text="4", callback_data="var7_meadow")
         ]
     ]
 
@@ -341,15 +340,15 @@ def poll8():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="вариант 1", callback_data="var8_sugar"),
+                text="1", callback_data="var8_sugar"),
             types.InlineKeyboardButton(
-                text="вариант 2", callback_data="var8_sault")
+                text="2", callback_data="var8_sault")
         ],
         [
             types.InlineKeyboardButton(
-                text="вариант 3", callback_data="var8_pepper"),
+                text="3", callback_data="var8_pepper"),
             types.InlineKeyboardButton(
-                text="вариант 4", callback_data="var8_spices")
+                text="4", callback_data="var8_spices")
         ]
     ]
 
@@ -361,15 +360,15 @@ def poll9():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="вариант 1", callback_data="var9_"),
+                text="1", callback_data="var9_"),
             types.InlineKeyboardButton(
-                text="вариант 2", callback_data="var9_")
+                text="2", callback_data="var9_")
         ],
         [
             types.InlineKeyboardButton(
-                text="вариант 3", callback_data="var9_"),
+                text="3", callback_data="var9_"),
             types.InlineKeyboardButton(
-                text="вариант 4", callback_data="var9_")
+                text="4", callback_data="var9_")
         ]
     ]
 
@@ -381,15 +380,15 @@ def poll10():
     buttons = [
         [
             types.InlineKeyboardButton(
-                text="вариант 1", callback_data="var10_"),
+                text="1", callback_data="var10_"),
             types.InlineKeyboardButton(
-                text="вариант 2", callback_data="var10_")
+                text="2", callback_data="var10_")
         ],
         [
             types.InlineKeyboardButton(
-                text="вариант 3", callback_data="var10_"),
+                text="3", callback_data="var10_"),
             types.InlineKeyboardButton(
-                text="вариант 4", callback_data="var10_")
+                text="4", callback_data="var10_")
         ]
     ]
 
