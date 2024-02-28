@@ -177,6 +177,10 @@ async def callbacks_var10(callback: types.CallbackQuery, state: FSMContext):
 
 @router.message(last_question.view_quest)
 async def answer(message: types.Message, state: FSMContext):
+    if len(str(message.text)) > 20:
+        await message.answer("Пожалуйста, укажите название длинной не более 20 символов")
+        return
+
     result = get_db_str(message.from_user.id)
     result.append(message.text)
 
