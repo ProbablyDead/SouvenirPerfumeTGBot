@@ -57,7 +57,14 @@ def form_buttons(q_num: int, ingredients: list[str]):
 
 async def set_question(num: int, message: types.Message, state = None, first: bool = False):
     q = test[num]
-    text = f"{num+1}/{QUESTION_COUNT}\n\n{q['text']}"
+    text = f"{num+1}/{QUESTION_COUNT}\n\n<b>{q['title']}</b>"
+
+    if "options" in q:
+        options = q["options"]
+
+        for i in range(len(options)):
+            text += f'\n\t {i+1}. {options[i]}'
+
     ingredients = q["ingredients"]
 
     if q["type"] == "open":
