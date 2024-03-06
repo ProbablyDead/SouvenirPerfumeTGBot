@@ -16,6 +16,19 @@ from result_image import ResultImage
 router = Router()
 database = Database()
 
+def reply_keyboard():
+    kb = [
+        [
+            types.KeyboardButton(text="Пройти тест"),
+            types.KeyboardButton(text="Заказать аромат")
+        ],
+    ]
+    return types.ReplyKeyboardMarkup(
+        keyboard=kb,
+        resize_keyboard=True,
+        one_time_keyboard=True,
+        input_field_placeholder="Выберите действие",
+    )
 
 class last_question(StatesGroup):
     view_quest = State()
@@ -95,7 +108,7 @@ async def answer(message: types.Message, state: FSMContext):
     bio.seek(0)
 
     await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(), "result.jpeg"),
-                               caption="Спасибо за прохождение теста! Вот результат:")
+                               caption="Спасибо за прохождение теста! Вот результат:", reply_markup=reply_keyboard())
 
     await state.clear()
 

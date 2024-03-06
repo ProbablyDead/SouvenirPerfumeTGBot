@@ -1,21 +1,7 @@
 from aiogram import F, types
 from aiogram.filters import Command
 
-from poll import router, start_test
-
-def reply_keyboard():
-    kb = [
-        [
-            types.KeyboardButton(text="Пройти тест"),
-            types.KeyboardButton(text="Заказать аромат")
-        ],
-    ]
-    return types.ReplyKeyboardMarkup(
-        keyboard=kb,
-        resize_keyboard=True,
-        one_time_keyboard=True,
-        input_field_placeholder="Выберите действие",
-    )
+from poll import router, start_test, reply_keyboard
 
 
 @router.message(Command("start"))
