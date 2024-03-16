@@ -2,7 +2,6 @@ import asyncio
 import logging
 
 from dotenv import load_dotenv
-from pathlib import Path
 import os
 
 from aiogram.client.default import DefaultBotProperties
@@ -16,14 +15,14 @@ import start
 class TelegramBot:
     def __init__(self) -> None:
         # load env 
-        dotenv_path = Path("./.env")
-        load_dotenv(dotenv_path=dotenv_path)
+        load_dotenv()
 
         BOT_TOKEN = os.getenv('BOT_TOKEN')
 
         if BOT_TOKEN == None:
-            print("Cannot locate .env and bot token")
+            print("Cannot locate env var BOT_TOKEN")
             exit(1);
+
 
         logging.basicConfig(level=logging.INFO)
 
