@@ -39,16 +39,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PRIVATE_KEY}}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd ${{ secrets.WORK_DIR }};
-            docker stop ${{ env.CONTAINER_NAME }};
-            docker rm ${{ env.CONTAINER_NAME }};
-            docker pull ${{ vars.DOCKER_TAG }};
-            docker-compose up -d
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Install ssh keys
+        run: |
+            install -m 600 -D /dev/null ~/.ssh/id_rsa
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+
+      - name: Connect and pull
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
+
+      - name: cleanup
+        run: rm -rf ~/.ssh
+
+
+
+    # steps:
+    #   - name: Deploy
+    #     uses: appleboy/ssh-action@v0.1.10
+    #     with:
+    #       host: ${{ secrets.SSH_HOST }}
+    #       username: ${{ secrets.SSH_USERNAME }}
+    #       password: ${{ secrets.SSH_PASSWORD }}
+    #       port: ${{ secrets.PORT }}
+    #       script: |
+    #         cd ${{ secrets.WORK_DIR }};
+    #         docker stop ${{ env.CONTAINER_NAME }};
+    #         docker rm ${{ env.CONTAINER_NAME }};
+    #         docker pull ${{ vars.DOCKER_TAG }};
+    #         docker-compose up -d
