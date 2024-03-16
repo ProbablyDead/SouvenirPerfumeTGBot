@@ -31,7 +31,7 @@ jobs:
         with: 
           context: .
           push: true
-          tags: ${{ DOCKER_TAG }}
+          tags: ${{ vars.DOCKER_TAG }}
 
 
 
