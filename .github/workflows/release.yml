@@ -22,8 +22,8 @@ jobs:
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v5.3.0
-        env: 
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        build-args: |
+          "BOT_TOKEN=${{ secrets.BOT_TOKEN }}"
         with: 
           context: .
           push: true
