@@ -44,7 +44,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: ${{ secrets.SSH_PRIVATE_KEY}}
           port: ${{ secrets.PORT }}
           script: |
             cd ${{ secrets.WORK_DIR }};
