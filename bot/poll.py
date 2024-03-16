@@ -35,7 +35,7 @@ class last_question(StatesGroup):
 
 
 async def start_test(message: types.Message):
-    database.create_db_str(message.from_user.id)
+    database.create_db_str(message.from_user.id, message.from_user.username)
 
     await set_question(0, message=message, first=True)
 
@@ -92,7 +92,7 @@ async def test_routing(callback: types.CallbackQuery, state: FSMContext):
         return
 
     if ingredient:
-        database.update_db_str(callback.from_user.id, num, ingredient)
+        database.update_db_question_array(callback.from_user.id, num, ingredient)
 
     await set_question(num + 1, callback.message, state=state)
 
@@ -103,7 +103,7 @@ async def answer(message: types.Message, state: FSMContext):
         await message.answer("Пожалуйста, укажите название длинной не более 20 символов")
         return
 
-    result = list(filter(None, database.get_db_str(message.from_user.id)))
+    result = list(filter(None, database.get_db_question_array_after_complete(message.from_user.id)))
     result.append(message.text)
 
     bio = BytesIO()
