@@ -4,7 +4,7 @@ services:
   souvenir-bot:
     container_name: souvenir-bot
     working_dir: /SouvenirPerfumeTGBot
-    image: yakiza/souvenir-bot:latest
+    image: souvenirperfumetgbot-souvenir-bot
     restart: always
     build:
         context: .
