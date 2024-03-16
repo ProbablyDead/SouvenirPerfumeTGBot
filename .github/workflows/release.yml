@@ -2,11 +2,7 @@ name: release
 
 on:
   push:
-    branches: [ "main" ]
-
-
-env:
-  CONTAINER_NAME: souvenir-telegram-bot
+    branches: [ "release" ]
 
 
 jobs:
@@ -35,7 +31,7 @@ jobs:
 
   deploy-via-ssh:
     needs: build-and-push-image
-    name: deploy image
+    name: Deploy image
     runs-on: ubuntu-latest
 
     steps:
@@ -54,19 +50,3 @@ jobs:
       - name: cleanup
         run: rm -rf ~/.ssh
 
-
-
-    # steps:
-    #   - name: Deploy
-    #     uses: appleboy/ssh-action@v0.1.10
-    #     with:
-    #       host: ${{ secrets.SSH_HOST }}
-    #       username: ${{ secrets.SSH_USERNAME }}
-    #       password: ${{ secrets.SSH_PASSWORD }}
-    #       port: ${{ secrets.PORT }}
-    #       script: |
-    #         cd ${{ secrets.WORK_DIR }};
-    #         docker stop ${{ env.CONTAINER_NAME }};
-    #         docker rm ${{ env.CONTAINER_NAME }};
-    #         docker pull ${{ vars.DOCKER_TAG }};
-    #         docker-compose up -d
