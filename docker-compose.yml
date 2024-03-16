@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  telegram-bot:
+  souvenir-bot:
     container_name: souvenir-bot
     working_dir: /SouvenirPerfumeTGBot
     restart: always
