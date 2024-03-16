@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   telegram-bot:
-    container_name: souvenir-telegram-bot
+    container_name: souvenir-bot
     working_dir: /SouvenirPerfumeTGBot
     restart: always
     build:
