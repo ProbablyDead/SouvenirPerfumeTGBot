@@ -28,6 +28,7 @@ jobs:
           context: .
           push: true
           tags: ${{ vars.DOCKER_TAG }}
+        run: echo $BOT_TOKEN  
 
   deploy-via-ssh:
     needs: build-and-push-image
