@@ -23,7 +23,6 @@ jobs:
         env:
           GOOGLE_CREDS_PW: ${{ secrets.GOOGLE_CREDS_PW }}
         run: |
-          mkdir $GITHUB_WORKSPACE/bot/secrets
           gpg --quiet --batch --yes --decrypt --passphrase="$GOOGLE_CREDS_PW" \
           --output $GITHUB_WORKSPACE/secrets/creds.json creds.json.gpg
 
