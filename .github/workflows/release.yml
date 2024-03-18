@@ -19,6 +19,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Decrypt Google credentials.json
+        env:
+          GOOGLE_CREDS_PW: ${{ secrets.GOOGLE_CREDS_PW }}
+        run: |
+          mkdir $GITHUB_WORKSPACE/bot/secrets
+          gpg --quiet --batch --yes --decrypt --passphrase="$GOOGLE_CREDS_PW" \
+          --output $GITHUB_WORKSPACE/secrets/creds.json creds.json.gpg
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v5.3.0
