@@ -24,7 +24,7 @@ jobs:
           GOOGLE_CREDS_PW: ${{ secrets.GOOGLE_CREDS_PW }}
         run: |
           gpg --quiet --batch --yes --decrypt --passphrase="$GOOGLE_CREDS_PW" \
-          --output $GITHUB_WORKSPACE/secrets/creds.json creds.json.gpg
+          --output $GITHUB_WORKSPACE/secrets/creds.json $GITHUB_WORKSPACE/secrets/creds.json.gpg
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v5.3.0
