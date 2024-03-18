@@ -21,9 +21,9 @@ jobs:
 
       - name: p
         run: |
-        pwd
-        ls bot
-        ls secrets
+          pwd
+          ls bot
+          ls secrets
 
       - name: Decrypt Google credentials.json
         env:
