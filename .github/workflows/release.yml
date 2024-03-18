@@ -19,8 +19,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - run: |
+      - name: p
+        run: |
         pwd
+        ls bot
+        ls secrets
 
       - name: Decrypt Google credentials.json
         env:
