@@ -103,8 +103,8 @@ async def answer(message: types.Message, state: FSMContext):
         await message.answer("Пожалуйста, укажите название длинной не более 20 символов")
         return
 
+    database.update_db_question_array(message.from_user.id, -1, str(message.text))
     result = list(filter(None, database.get_db_question_array_after_complete(message.from_user.id)))
-    result.append(message.text)
 
     bio = BytesIO()
     bio.name = 'result.jpeg'
