@@ -1,5 +1,6 @@
 import shelve
 from tele_test import QUESTION_COUNT
+from google_api import Google_worker
 
 class Database:
     PATH = "data/data"
@@ -10,6 +11,7 @@ class Database:
     def __init__(self) -> None:
         self.database = shelve.open(self.PATH, writeback=True)
         self.EMPTY_ARR = [None] * QUESTION_COUNT
+        self.google_worker = Google_worker()
 
 
     def clean_db_question_array(self, id):
@@ -31,6 +33,7 @@ class Database:
     def get_db_question_array_after_complete(self, id):
         st = self.database.get(str(id), { self.QUESTIONS: [], self.PASS_COUNT: 0 })
         st[self.PASS_COUNT] += 1
+        self.google_worker.update_sheet(st[self.USER_NAME], st)
         return st[self.QUESTIONS]
 
 

@@ -10,7 +10,11 @@ from aiogram.enums import ParseMode
 
 from poll import router
 
+from google_api import Google_worker
+
 import start
+
+SPREADSHEET_ID = None
 
 class TelegramBot:
     def __init__(self) -> None:
@@ -37,5 +41,4 @@ class TelegramBot:
 
 
 if __name__ == "__main__":
-    tg = TelegramBot()
-    asyncio.run(tg.main())
+    asyncio.run(TelegramBot().main())
