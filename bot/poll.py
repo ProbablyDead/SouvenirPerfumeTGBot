@@ -115,7 +115,7 @@ async def answer(message: types.Message, state: FSMContext):
     bio.seek(0)
 
     await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(), "result.jpeg"),
-                               caption="Спасибо за прохождение теста! Заказать аромат вы можете по цене 1200 рублей, переслав данное сообщение @oooobnulai", reply_markup=reply_keyboard())
+                               caption="Спасибо за прохождение теста! Заказать аромат вы можете по цене 1200 рублей, переслав данное сообщение @obnulai", reply_markup=reply_keyboard())
 
     await state.clear()
 
