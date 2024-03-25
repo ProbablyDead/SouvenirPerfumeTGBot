@@ -10,6 +10,7 @@ if PATH is None:
     print("Cannot locate env var DATA_PATH")
     exit(1)
 
+print(PATH)
 
 class Database:
     QUESTIONS = "questions"
