@@ -17,8 +17,7 @@ class Database:
     PASS_COUNT = "passCount"
 
     def __init__(self) -> None:
-        self.database = shelve.open(PATH + 'data', writeback=True)
-        print(self.database)
+        self.database = shelve.open(PATH, writeback=True)
         self.EMPTY_ARR = [None] * QUESTION_COUNT
         self.google_worker = Google_worker()
 
