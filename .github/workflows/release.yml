@@ -55,7 +55,7 @@ jobs:
 
       - name: Connect and pull
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 
-          "pwd && cd ${{ secrets.WORK_DIR }} && DATA_PATH=${{ vars.DATA_PATH }} docker compose pull 
+          "ls && cd ${{ secrets.WORK_DIR }} && DATA_PATH=${{ vars.DATA_PATH }} docker compose pull 
           && DATA_PATH=${{ vars.DATA_PATH }} docker compose up -d && exit"
 
       - name: cleanup
