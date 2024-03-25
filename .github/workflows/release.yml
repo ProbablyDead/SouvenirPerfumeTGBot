@@ -31,7 +31,8 @@ jobs:
         with: 
           build-args: |
             "BOT_TOKEN=${{ secrets.BOT_TOKEN }}"
-            "SPREADSHEET_ID=${{ vars.SPREADSHEET_ID }}"
+            "SPREADSHEET_ID=${{ secrets.SPREADSHEET_ID }}"
+            "DOCKER_VOLUME_PATH=${{ vars.DOCKER_VOLUME_PATH }}"
           context: .
           push: true
           tags: ${{ vars.DOCKER_TAG }}
