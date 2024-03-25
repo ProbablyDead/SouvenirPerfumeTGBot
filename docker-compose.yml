@@ -9,7 +9,7 @@ services:
         dockerfile: Dockerfile
     command: sh -c "cd bot && python main.py"
     volumes:
-      - souvenir-bot:/data
+      - souvenir-bot:${DATA_PATH}
 
 volumes:
   souvenir-bot:
