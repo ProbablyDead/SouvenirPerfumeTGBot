@@ -4,10 +4,10 @@ import os
 from tele_test import QUESTION_COUNT
 from google_api import Google_worker
 
-PATH = os.getenv('BOT_TOKEN')
+PATH = os.getenv('DATA_PATH')
 
 if PATH is None:
-    print("Cannot locate env var BOT_TOKEN")
+    print("Cannot locate env var DATA_PATH")
     exit(1)
 
 
