@@ -10,7 +10,6 @@ if PATH is None:
     print("Cannot locate env var DATA_PATH")
     exit(1)
 
-print(PATH)
 
 class Database:
     QUESTIONS = "questions"
@@ -19,6 +18,7 @@ class Database:
 
     def __init__(self) -> None:
         self.database = shelve.open(PATH + 'data', writeback=True)
+        print(self.database)
         self.EMPTY_ARR = [None] * QUESTION_COUNT
         self.google_worker = Google_worker()
 
