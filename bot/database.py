@@ -1,16 +1,23 @@
 import shelve
+import os
+
 from tele_test import QUESTION_COUNT
 from google_api import Google_worker
 
+PATH = os.getenv('BOT_TOKEN')
+
+if PATH is None:
+    print("Cannot locate env var BOT_TOKEN")
+    exit(1)
+
 
 class Database:
-    PATH = "/SouvenirPerfumeTGBot/data"
     QUESTIONS = "questions"
     USER_NAME = "userName"
     PASS_COUNT = "passCount"
 
     def __init__(self) -> None:
-        self.database = shelve.open(self.PATH, writeback=True)
+        self.database = shelve.open(PATH, writeback=True)
         self.EMPTY_ARR = [None] * QUESTION_COUNT
         self.google_worker = Google_worker()
 

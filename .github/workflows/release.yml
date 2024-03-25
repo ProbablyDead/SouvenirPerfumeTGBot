@@ -32,6 +32,7 @@ jobs:
           build-args: |
             "BOT_TOKEN=${{ secrets.BOT_TOKEN }}"
             "SPREADSHEET_ID=${{ secrets.SPREADSHEET_ID }}"
+            "DATA_PATH=${{ vars.DATA_PATH }}"
           context: .
           push: true
           tags: ${{ vars.DOCKER_TAG }}
@@ -53,7 +54,9 @@ jobs:
             ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
       - name: Connect and pull
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up && exit"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 
+          "cd ${{ secrets.WORK_DIR }} && docker compose pull 
+          && DATA_PATH=${{ vars.DATA_PATH }} docker compose up -d && exit"
 
       - name: cleanup
         run: rm -rf ~/.ssh
