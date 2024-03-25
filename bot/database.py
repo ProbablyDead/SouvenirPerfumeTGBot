@@ -2,26 +2,15 @@ import shelve
 from tele_test import QUESTION_COUNT
 from google_api import Google_worker
 
-from dotenv import load_dotenv
-import os
-
-# load env
-load_dotenv()
-
-PATH = os.getenv('DOCKER_VOLUME_PATH')
-
-if PATH is None:
-    print("Cannot locate env var DOCKER_VOLUME_PATH")
-    exit(1)
-
 
 class Database:
+    PATH = "/SouvenirPerfumeTGBot/data"
     QUESTIONS = "questions"
     USER_NAME = "userName"
     PASS_COUNT = "passCount"
 
     def __init__(self) -> None:
-        self.database = shelve.open(PATH, writeback=True)
+        self.database = shelve.open(self.PATH, writeback=True)
         self.EMPTY_ARR = [None] * QUESTION_COUNT
         self.google_worker = Google_worker()
 

@@ -11,7 +11,7 @@ services:
         dockerfile: Dockerfile
     command: sh -c "cd bot && python main.py"
     volumes:
-      - souvenir-bot:${DOCKER_VOLUME_PATH}
+      - souvenir-bot:/SouvenirPerfumeTGBot/data
 
 volumes:
   souvenir-bot:
