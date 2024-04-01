@@ -5,28 +5,26 @@ from dotenv import load_dotenv
 import os
 
 from aiogram.client.default import DefaultBotProperties
-from aiogram import Bot, Dispatcher 
+from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 
 from poll import router
-
-from google_api import Google_worker
 
 import start
 
 SPREADSHEET_ID = None
 
+
 class TelegramBot:
     def __init__(self) -> None:
-        # load env 
+        # load env
         load_dotenv()
 
         BOT_TOKEN = os.getenv('BOT_TOKEN')
 
-        if BOT_TOKEN == None:
+        if BOT_TOKEN is None:
             print("Cannot locate env var BOT_TOKEN")
-            exit(1);
-
+            exit(1)
 
         logging.basicConfig(level=logging.INFO)
 

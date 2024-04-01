@@ -15,6 +15,7 @@ class Database:
     QUESTIONS = "questions"
     USER_NAME = "userName"
     PASS_COUNT = "passCount"
+    PAYMENT_COUNT = "payments"
 
     def __init__(self) -> None:
         self.database = shelve.open(PATH + "data", writeback=True)
@@ -33,7 +34,8 @@ class Database:
         else:
             self.database[str(id)] = {
                     self.USER_NAME: userName, self.QUESTIONS:
-                    self.EMPTY_ARR.copy(), self.PASS_COUNT: 0
+                    self.EMPTY_ARR.copy(), self.PASS_COUNT: 0,
+                    self.PAYMENT_COUNT: 0
                     }
 
     def update_db_question_array(self, id, at: int, ans: str):
@@ -61,6 +63,9 @@ class Database:
 
     def del_db_item(self, id):
         del self.database[str(id)]
+
+    def add_db_payment(self, id):
+        self.database[str(id)][self.PAYMENT_COUNT] += 1;
 
     def __del__(self) -> None:
         self.database.close()

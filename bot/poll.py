@@ -11,10 +11,12 @@ from io import BytesIO
 from tele_test import QUESTION_COUNT, test
 from database import Database
 from result_image import ResultImage
+from payment import payment
 
 
 router = Router()
 database = Database()
+
 
 def reply_keyboard():
     kb = [
@@ -30,6 +32,7 @@ def reply_keyboard():
         input_field_placeholder="Выберите действие",
     )
 
+
 class last_question(StatesGroup):
     view_quest = State()
 
@@ -41,7 +44,7 @@ async def start_test(message: types.Message):
 
 
 def form_buttons(q_num: int, ingredients: list[str]):
-    button = lambda i : types.InlineKeyboardButton(text=str(i),
+    button = lambda i: types.InlineKeyboardButton(text=str(i),
                                                    callback_data=f"answer_{q_num}_{ingredients[i-1] if ingredients else ''}")
 
     back_button = [ types.InlineKeyboardButton(text="Назад ↩", callback_data=f"answer_{q_num}_!") ]
@@ -79,7 +82,7 @@ async def set_question(num: int, message: types.Message, state = None, first: bo
             await message.edit_text(text, reply_markup=buttons)
     else:
         await message.answer(text, reply_markup=buttons)
-        
+
 
 @router.callback_query(F.data.startswith("answer"))
 async def test_routing(callback: types.CallbackQuery, state: FSMContext):
@@ -92,7 +95,9 @@ async def test_routing(callback: types.CallbackQuery, state: FSMContext):
         return
 
     if ingredient:
-        database.update_db_question_array(callback.from_user.id, num, ingredient)
+        database.update_db_question_array(callback.from_user.id,
+                                          num,
+                                          ingredient)
 
     await set_question(num + 1, callback.message, state=state)
 
@@ -100,11 +105,17 @@ async def test_routing(callback: types.CallbackQuery, state: FSMContext):
 @router.message(last_question.view_quest)
 async def answer(message: types.Message, state: FSMContext):
     if len(str(message.text)) > 20:
-        await message.answer("Пожалуйста, укажите название длинной не более 20 символов")
+        await message.answer("Пожалуйста, укажите название \
+                             длинной не более 20 символов")
         return
 
-    database.update_db_question_array(message.from_user.id, -1, str(message.text))
-    result = list(filter(None, database.get_db_question_array_after_complete(message.from_user.id)))
+    database.update_db_question_array(message.from_user.id,
+                                      -1,
+                                      str(message.text))
+    result = list(filter(None,
+                         database.get_db_question_array_after_complete(
+                             message.from_user.id
+                             )))
 
     bio = BytesIO()
     bio.name = 'result.jpeg'
@@ -114,7 +125,8 @@ async def answer(message: types.Message, state: FSMContext):
     img.save(bio, "JPEG")
     bio.seek(0)
 
-    await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(), "result.jpeg"),
+    await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(),
+                                                             "result.jpeg"),
                                caption="Спасибо за прохождение теста! Заказать аромат вы можете по цене 1200 рублей, переслав данное сообщение @obnulai", reply_markup=reply_keyboard())
 
     await state.clear()

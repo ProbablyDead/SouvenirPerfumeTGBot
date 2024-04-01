@@ -3,6 +3,8 @@ import os
 
 from dotenv import load_dotenv
 
+from tele_test import QUESTION_COUNT
+
 from operator import add
 from functools import reduce
 
@@ -22,17 +24,26 @@ class Google_worker:
         self._worksheet = self._sh.get_worksheet_by_id(0)
 
     def get_body(self, values):
-        return list(filter(lambda x: x is not None, reduce(add, [ value if value.__class__ == list  else [value] for value in values.values()])))
+        return list(filter(lambda x: x is not None,
+                           reduce(add, [ value if value.__class__ == list  
+                                        else [value] for value in values.values()])))
 
                     
-    def update_sheet (self, userName: str, new_values) -> None:
+    def update_sheet(self, userName: str, new_values) -> None:
         cell = self._worksheet.find(userName)
+        body = self.get_body(new_values)
+
         if cell:
-            self._worksheet.update(range_name=cell.address, values=[self.get_body(new_values)])
+            self._worksheet.update(range_name=cell.address,
+                                   values=[body])
         else:
-            self._add_line(new_values)
+            self._add_line(body)
 
+    def add_payment(self, userName, new_value):
+        cell = self._worksheet.find(userName)
 
-    def _add_line(self, value) -> None:
-        self._worksheet.append_row(self.get_body(value), table_range='A:A')
+        self._worksheet.update_cell(cell.row, cell.col + QUESTION_COUNT + 1, new_value)
+
+    def _add_line(self, body) -> None:
+        self._worksheet.append_row(body, table_range='A:A')
 
