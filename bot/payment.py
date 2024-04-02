@@ -20,10 +20,10 @@ RETURN_URL = os.getenv('RETURN_URL')
 
 class Payment:
     def __init__(self):
-        self._DESCRIPTION = "description"
+        self._DESCRIPTION = "Оплата пользователя"
         self._payment_id = None
 
-    def create_payment(self, callback):
+    def create_payment(self, callback, user_name):
         payment = pmt.create({
             "amount": {
                 "value": PRICE,
@@ -37,7 +37,7 @@ class Payment:
                 "return_url": RETURN_URL
                 },
             "capture": True,
-            "description": self._DESCRIPTION
+            "description": f"{self._DESCRIPTION}: {user_name}"
             })
         
         payment_data = json.loads(payment.json())

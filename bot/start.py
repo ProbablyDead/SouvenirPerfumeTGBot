@@ -30,6 +30,6 @@ async def get_contacts(message: types.Message):
         else:
             await message.answer("К сожалению оплата не прошла.\nЕсли возникла ошибка, напишите, пожалуйста нашему техническому специалисту: @wrkngYkz")
 
-    await message.answer(f"Конечно! Вот ссылка для оплаты:\n\n{payment.create_payment(callback)}",
+    await message.answer(f"Конечно! Вот ссылка для оплаты:\n\n{payment.create_payment(callback, message.from_user.username)}",
                         reply_markup=reply_keyboard())
 
