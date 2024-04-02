@@ -1,6 +1,8 @@
 import gspread
-import os
+import os 
+import zoneinfo
 
+from datetime import datetime
 from dotenv import load_dotenv
 
 from tele_test import INGREDIENT_QUESTION_COUNT
@@ -42,7 +44,15 @@ class Google_worker:
     def add_payment(self, userName, new_value):
         cell = self._worksheet.find(userName)
 
-        self._worksheet.update_cell(cell.row, cell.col + INGREDIENT_QUESTION_COUNT + 3, new_value)
+        payment_cell_col = cell.col + INGREDIENT_QUESTION_COUNT + 3
+
+        zone = zoneinfo.ZoneInfo("Europe/Moscow")
+
+        self._worksheet.update_cell(cell.row, payment_cell_col, new_value)
+        self._worksheet.update_cell(cell.row, payment_cell_col + 1, 
+                                    str(datetime.now(zone).date()))
+        self._worksheet.update_cell(cell.row, payment_cell_col + 2, 
+                                    datetime.now(zone).time().strftime("%H:%M:%S"))
 
     def _add_line(self, body) -> None:
         self._worksheet.append_row(body, table_range='A:A')
