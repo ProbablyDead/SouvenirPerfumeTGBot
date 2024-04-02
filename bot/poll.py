@@ -11,8 +11,8 @@ from io import BytesIO
 from tele_test import QUESTION_COUNT, test
 from database import Database
 from result_image import ResultImage
-from payment import payment
 
+import asyncio
 
 router = Router()
 database = Database()
@@ -117,17 +117,21 @@ async def answer(message: types.Message, state: FSMContext):
                              message.from_user.id
                              )))
 
-    bio = BytesIO()
-    bio.name = 'result.jpeg'
+    async def create_image_and_answer():
+        bio = BytesIO()
+        bio.name = 'result.jpeg'
 
-    img = ResultImage.result_image(result)
+        img = ResultImage.result_image(result)
 
-    img.save(bio, "JPEG")
-    bio.seek(0)
+        img.save(bio, "JPEG")
+        bio.seek(0)
 
-    await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(),
-                                                             "result.jpeg"),
-                               caption="Спасибо за прохождение теста! Заказать аромат вы можете по цене 1200 рублей, переслав данное сообщение @obnulai", reply_markup=reply_keyboard())
+        await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(),
+                                                                 "result.jpeg"),
+            caption='Спасибо за прохождение теста!\
+                                   Заказать аромат вы можете по цене 1200 рублей, нажав "Заказать аромат"', 
+                                   reply_markup=reply_keyboard())
 
-    await state.clear()
+        await state.clear()
 
+    asyncio.run_coroutine_threadsafe(create_image_and_answer(), loop=asyncio.get_event_loop())

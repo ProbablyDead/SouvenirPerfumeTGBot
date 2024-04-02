@@ -3,7 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-from tele_test import QUESTION_COUNT
+from tele_test import INGREDIENT_QUESTION_COUNT
 
 from operator import add
 from functools import reduce
@@ -42,7 +42,7 @@ class Google_worker:
     def add_payment(self, userName, new_value):
         cell = self._worksheet.find(userName)
 
-        self._worksheet.update_cell(cell.row, cell.col + QUESTION_COUNT + 1, new_value)
+        self._worksheet.update_cell(cell.row, cell.col + INGREDIENT_QUESTION_COUNT + 3, new_value)
 
     def _add_line(self, body) -> None:
         self._worksheet.append_row(body, table_range='A:A')

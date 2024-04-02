@@ -1,8 +1,9 @@
 from aiogram import F, types
 from aiogram.filters import Command
 
-from poll import router, start_test, reply_keyboard
+from poll import router, start_test, reply_keyboard, database
 
+from payment import Payment
 
 @router.message(Command("start"))
 async def cmd_start(message: types.Message):
@@ -14,8 +15,21 @@ async def start_poll(message: types.Message):
     await start_test(message)
 
 
-@router.message(F.text.lower() == "заказать аромат")  # Переделать
+@router.message(F.text.lower() == "заказать аромат") 
 async def get_contacts(message: types.Message):
-    await message.reply("Конечно!\nДля заказа напиши @obnulai и прикрепи желаемый результат теста",
+    if not database.get_db_pass_count(message.from_user.id):
+        await message.answer("Для начала нужно пройти тест!", reply_markup=reply_keyboard())
+        return
+
+    payment = Payment()
+
+    async def callback(succeed: bool):
+        if succeed:
+            database.add_db_payment(message.from_user.id)
+            await message.answer("Спасибо за покупку!\nДля согласования доставки свяжитесь, пожалуйста, с ответственным за заказы: @souvenir_perfume_order")
+        else:
+            await message.answer("К сожалению оплата не прошла.\nЕсли возникла ошибка, напишите, пожалуйста нашему техническому специалисту: @wrkngYkz")
+
+    await message.answer(f"Конечно! Вот ссылка для оплаты:\n\n{payment.create_payment(callback)}",
                         reply_markup=reply_keyboard())
 

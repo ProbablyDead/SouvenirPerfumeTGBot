@@ -33,6 +33,10 @@ jobs:
             "BOT_TOKEN=${{ secrets.BOT_TOKEN }}"
             "SPREADSHEET_ID=${{ secrets.SPREADSHEET_ID }}"
             "DATA_PATH=${{ vars.DATA_PATH }}"
+            "SHOP_ID=${{ secrets.SHOP_ID }}"
+            "SHOP_KEY=${{ secrets.SHOP_KEY }}"
+            "PRICE=${{ vars.PRICE }}"
+            "RETURN_URL=${{ vars.RETURN_URL }}"
           context: .
           push: true
           tags: ${{ vars.DOCKER_TAG }}

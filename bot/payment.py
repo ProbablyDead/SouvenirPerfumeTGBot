@@ -1,7 +1,9 @@
 import os
 import json
 import time
-import threading
+import asyncio
+from threading import Thread
+
 from dotenv import load_dotenv
 
 from yookassa import Configuration, Payment as pmt
@@ -16,15 +18,12 @@ Configuration.configure(SHOP_ID, SHOP_KEY)
 PRICE = os.getenv('PRICE')
 RETURN_URL = os.getenv('RETURN_URL')
 
-def test(succeed, username):
-    print(succeed)
-
 class Payment:
     def __init__(self):
         self._DESCRIPTION = "description"
         self._payment_id = None
 
-    def create_payment(self, callback, customer_tg_username):
+    def create_payment(self, callback):
         payment = pmt.create({
             "amount": {
                 "value": PRICE,
@@ -45,23 +44,19 @@ class Payment:
         self._payment_id = payment_data['id']
 
         # Run in parallel thread
-        threading.Thread(target=self._check_payment, 
-                         args=(callback,customer_tg_username)).start()
+        Thread(target=self._check_payment, 
+                         args=(callback, asyncio.get_event_loop())).start()
 
         return (payment_data['confirmation'])['confirmation_url']
 
     # callback - (bool) => None
-    def _check_payment(self, callback, customer_tg_username):
+    def _check_payment(self, callback, event_loop):
         payment = json.loads((pmt.find_one(self._payment_id)).json())
         while payment['status'] == 'pending':
             payment = json.loads((pmt.find_one(self._payment_id)).json())
             time.sleep(3)
 
-        callback(payment['status'] == 'succeeded', customer_tg_username)
-
-
-print(Payment().create_payment(test, 'yakiza'))
-
-while True:
-    pass
+        asyncio.run_coroutine_threadsafe(
+                callback(payment['status'] == 'succeeded'),
+                loop=event_loop)
 

@@ -26,7 +26,10 @@ class Database:
         s = self.database[str(id)]
         self.database[str(id)] = {self.USER_NAME: s[self.USER_NAME],
                                   self.QUESTIONS: [None]*9,
-                                  self.PASS_COUNT: s[self.PASS_COUNT]}
+                                  self.PASS_COUNT: s[self.PASS_COUNT],
+                                  self.PAYMENT_COUNT: s[self.PAYMENT_COUNT] if
+                                    self.PAYMENT_COUNT in s else 0
+                                  }
 
     def create_db_str(self, id, userName):
         if str(id) in self.database:
@@ -43,7 +46,9 @@ class Database:
 
     def get_db_question_array_after_complete(self, id):
         st = self.database.get(str(id), {self.QUESTIONS: [],
-                                         self.PASS_COUNT: 0})
+                                         self.PASS_COUNT: 0,
+                                         self.PAYMENT_COUNT: 0
+                                         })
         st[self.PASS_COUNT] += 1
         self.google_worker.update_sheet(st[self.USER_NAME], st)
         return st[self.QUESTIONS]
@@ -65,7 +70,12 @@ class Database:
         del self.database[str(id)]
 
     def add_db_payment(self, id):
-        self.database[str(id)][self.PAYMENT_COUNT] += 1;
+        st = self.database.get(str(id), {self.QUESTIONS: [],
+                                         self.PASS_COUNT: 0,
+                                         self.PAYMENT_COUNT: 0
+                                         })
+        st[self.PAYMENT_COUNT] += 1
+        self.google_worker.add_payment(st[self.USER_NAME], st[self.PAYMENT_COUNT])
 
     def __del__(self) -> None:
         self.database.close()
