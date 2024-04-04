@@ -4,6 +4,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram import types
 from aiogram.exceptions import TelegramBadRequest
+from dotenv import load_dotenv
 
 from contextlib import suppress
 from io import BytesIO
@@ -13,10 +14,13 @@ from database import Database
 from result_image import ResultImage
 
 import asyncio
+import os
 
 router = Router()
 database = Database()
 
+load_dotenv()
+PRICE = os.getenv('PRICE')
 
 def reply_keyboard():
     kb = [
@@ -128,8 +132,8 @@ async def answer(message: types.Message, state: FSMContext):
 
         await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(),
                                                                  "result.jpeg"),
-            caption='Спасибо за прохождение теста!\
-                                   Заказать аромат вы можете по цене 1200 рублей, нажав "Заказать аромат"', 
+            caption=f'Спасибо за прохождение теста!\
+                                   Заказать аромат вы можете по цене {PRICE.partition(".")[0]} рублей, нажав "Заказать аромат"', 
                                    reply_markup=reply_keyboard())
 
         await state.clear()
