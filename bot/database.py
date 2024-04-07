@@ -25,7 +25,7 @@ class Database:
     def clean_db_question_array(self, id):
         s = self.database[str(id)]
         self.database[str(id)] = {self.USER_NAME: s[self.USER_NAME],
-                                  self.QUESTIONS: [None]*9,
+                                  self.QUESTIONS: [None]*QUESTION_COUNT,
                                   self.PASS_COUNT: s[self.PASS_COUNT],
                                   self.PAYMENT_COUNT: s[self.PAYMENT_COUNT] if
                                     self.PAYMENT_COUNT in s else 0
@@ -50,7 +50,9 @@ class Database:
                                          self.PAYMENT_COUNT: 0
                                          })
         st[self.PASS_COUNT] += 1
-        self.google_worker.update_sheet(st[self.USER_NAME], st)
+        with_out_ids = st.copy()
+        with_out_ids[self.QUESTIONS] = [s.split(':')[1] for s in with_out_ids[self.QUESTIONS][:-1]] + [st[self.QUESTIONS][-1]]
+        self.google_worker.update_sheet(st[self.USER_NAME], with_out_ids)
         return st[self.QUESTIONS]
 
     def get_db_user_name(self, id):

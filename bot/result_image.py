@@ -3,6 +3,7 @@ from random import choice
 
 
 class ResultImage:
+    COUNT_OF_INGREDIENTS = 6
     path_to_refs = "./references"
     
     templates = [path_to_refs + "/templates/В1.jpg",
@@ -29,60 +30,6 @@ class ResultImage:
     perfume_title_place = (933, 2730)
     
     perfume_title_place_size = (660, 1400)
-
-    @staticmethod
-    def get_name(ingredient) -> str:
-        match ingredient:
-            case "bedsheets":
-                return "свежее\nпостельное белье"
-            case "berry":
-                return "вишня"
-            case "breeze":
-                return "морской бриз"
-            case "caramel":
-                return "соленая карамель"
-            case "chocolate":
-                return "шоколад"
-            case "cigarette":
-                return "табак и кофе"
-            case "cinnamon":
-                return "корица"
-            case "citrus":
-                return "цитрус"
-            case "cognac":
-                return "коньячность,\nшоколад"
-            case "jasmine":
-                return "жасмин, мята"
-            case "lemon":
-                return "лимон и мята"
-            case "lily":
-                return "лилии, иланг-иланг"
-            case "mango":
-                return "манго"
-            case "meadow":
-                return "луг"
-            case "pepper":
-                return "розовый перец"
-            case "pistachios":
-                return "фисташка"
-            case "powder":
-                return "пудра"
-            case "rose":
-                return "розы, пионы"
-            case "sault":
-                return "морская соль"
-            case "spices":
-                return "специи"
-            case "sugar":
-                return "ваниль и сахар"
-            case "tree":
-                return "тиковое дерево"
-            case "vanilla":
-                return "ваниль"
-            case "wind":
-                return "свежий ветер"
-            case _:
-                return ""
 
     @staticmethod
     def get_image(answer):
@@ -133,17 +80,20 @@ class ResultImage:
                        mask=fontimage)
 
     @staticmethod
-    def result_image(answers):
+    def result_image(ids, names, title):
         with Image.open(choice(ResultImage.templates)) as working_template:
             working_template.load()
 
-        for answer, place, i in zip(answers[:6], ResultImage.images_place, range(6)):
-            with Image.open(ResultImage.get_image(answer)) as note:
+        for id, name, place, i in zip(ids[:ResultImage.COUNT_OF_INGREDIENTS],
+                                      names[:ResultImage.COUNT_OF_INGREDIENTS],
+                                      ResultImage.images_place,
+                                      range(ResultImage.COUNT_OF_INGREDIENTS)):
+            with Image.open(ResultImage.get_image(id)) as note:
                 note.load()
                 working_template.paste(note.resize(ResultImage.image_size), place)
-                ResultImage.paste_ingredient_title(working_template, ResultImage.get_name(answer),
+                ResultImage.paste_ingredient_title(working_template, name,
                                                    place, middle=not (i == 0 or i == 5))
 
-        ResultImage.paste_perfume_title(working_template, answers[-1])
+        ResultImage.paste_perfume_title(working_template, title)
 
         return working_template

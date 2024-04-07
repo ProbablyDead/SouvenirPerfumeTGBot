@@ -73,13 +73,15 @@ async def set_question(num: int, message: types.Message, state = None, first: bo
             text += f'\n\t {i+1}. {options[i]}'
 
     ingredients = q["ingredients"]
+    ingredientsID = q["ingredientsID"]
+    ingredients_with_ids = [f"{id}:{name}" for id, name in zip(ingredientsID, ingredients)]
 
     if q["type"] == "open":
         await state.set_state(last_question.view_quest)
         await message.edit_text(text)
         return
 
-    buttons = form_buttons(num, ingredients)
+    buttons = form_buttons(num, ingredients_with_ids)
 
     if not first:
         with suppress(TelegramBadRequest):
@@ -114,18 +116,22 @@ async def answer(message: types.Message, state: FSMContext):
         return
 
     database.update_db_question_array(message.from_user.id,
-                                      -1,
+                                      QUESTION_COUNT-1,
                                       str(message.text))
     result = list(filter(None,
                          database.get_db_question_array_after_complete(
                              message.from_user.id
                              )))
 
+    ids = [s.split(':')[0] for s in result[:-1]]
+    names = [s.split(':')[1] for s in result[:-1]]
+    title = result[-1]
+
     async def create_image_and_answer():
         bio = BytesIO()
         bio.name = 'result.jpeg'
 
-        img = ResultImage.result_image(result)
+        img = ResultImage.result_image(ids, names, title)
 
         img.save(bio, "JPEG")
         bio.seek(0)
