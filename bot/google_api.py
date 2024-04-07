@@ -12,6 +12,7 @@ from functools import reduce
 
 load_dotenv()
 
+EMPTY_USER = "__empty__"
 CREDENTIALS_FILE = './secrets/creds.json' 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
@@ -32,7 +33,7 @@ class Google_worker:
 
                     
     def update_sheet(self, userName: str, new_values) -> None:
-        cell = self._worksheet.find(userName)
+        cell = self._worksheet.find(userName if userName else EMPTY_USER)
         body = self.get_body(new_values)
 
         if cell:
@@ -42,7 +43,7 @@ class Google_worker:
             self._add_line(body)
 
     def add_payment(self, userName, new_value):
-        cell = self._worksheet.find(userName)
+        cell = self._worksheet.find(userName if userName else EMPTY_USER)
 
         payment_cell_col = cell.col + INGREDIENT_QUESTION_COUNT + 3
 
