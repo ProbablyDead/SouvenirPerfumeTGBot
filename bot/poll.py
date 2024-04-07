@@ -33,7 +33,7 @@ def reply_keyboard():
         keyboard=kb,
         resize_keyboard=True,
         one_time_keyboard=True,
-        input_field_placeholder="Выберите действие",
+        input_field_placeholder="Выбери действие",
     )
 
 
@@ -111,7 +111,7 @@ async def test_routing(callback: types.CallbackQuery, state: FSMContext):
 @router.message(last_question.view_quest)
 async def answer(message: types.Message, state: FSMContext):
     if len(str(message.text)) > 20:
-        await message.answer("Пожалуйста, укажите название \
+        await message.answer("Пожалуйста, укажи название \
                              длинной не более 20 символов")
         return
 
@@ -139,7 +139,7 @@ async def answer(message: types.Message, state: FSMContext):
         await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(),
                                                                  "result.jpeg"),
             caption=f'Спасибо за прохождение теста!\
-                                   Заказать аромат вы можете по цене {PRICE.partition(".")[0]} рублей, нажав "Заказать аромат"', 
+                                   Ты сможешь заказать аромат по цене {PRICE.partition(".")[0]} рублей, нажав "Заказать аромат"', 
                                    reply_markup=reply_keyboard())
 
         await state.clear()

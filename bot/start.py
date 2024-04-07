@@ -7,7 +7,7 @@ from payment import Payment
 
 @router.message(Command("start"))
 async def cmd_start(message: types.Message):
-    await message.answer("Приветствуем вас в нашем замечательном боте!", reply_markup=reply_keyboard())
+    await message.answer("Приветствуем тебя в нашем замечательном боте!", reply_markup=reply_keyboard())
 
 
 @router.message(F.text.lower() == "пройти тест")
@@ -26,10 +26,10 @@ async def get_contacts(message: types.Message):
     async def callback(succeed: bool):
         if succeed:
             database.add_db_payment(message.from_user.id)
-            await message.answer("Спасибо за покупку!\nДля согласования доставки свяжитесь, пожалуйста, с ответственным за заказы: @souvenir_perfume_order")
+            await message.answer("Спасибо за покупку!\nДля согласования доставки свяжись, пожалуйста, с ответственным за заказы: @souvenir_perfume_order")
         else:
-            await message.answer("К сожалению оплата не прошла.\nЕсли возникла ошибка, напишите, пожалуйста нашему техническому специалисту: @wrkngYkz")
+            await message.answer("К сожалению оплата не прошла.\nЕсли возникла ошибка, напиши, пожалуйста, нашему техническому специалисту: @wrkngYkz")
 
-    await message.answer(f"Конечно! Вот ссылка для оплаты:\n\n{payment.create_payment(callback, message.from_user.username)},\n\nПосле оплаты Вы можете связаться с ответственным за заказы и договориться о адресе и способе доставки, а так же обговорить интересующие Вас вопросы и пожелания касательно аромата",
+    await message.answer(f"Конечно! Вот ссылка для оплаты:\n\n{payment.create_payment(callback, message.from_user.username)},\n\nПосле оплаты ты можешь связаться с ответственным за заказы и договориться о адресе и способе доставки, а так же обговорить интересующие тебя вопросы и пожелания касательно аромата",
                         reply_markup=reply_keyboard())
 
