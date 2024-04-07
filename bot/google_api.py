@@ -27,13 +27,15 @@ class Google_worker:
         self._worksheet = self._sh.get_worksheet_by_id(0)
 
     def get_body(self, values):
-        return list(filter(lambda x: x is not None,
+        body = list(filter(lambda x: x is not None,
                            reduce(add, [ value if value.__class__ == list  
                                         else [value] for value in values.values()])))
 
+        return body
+
                     
     def update_sheet(self, userName: str, new_values) -> None:
-        cell = self._worksheet.find(userName if userName else EMPTY_USER)
+        cell = self._worksheet.find(userName)
         body = self.get_body(new_values)
 
         if cell:
@@ -43,7 +45,7 @@ class Google_worker:
             self._add_line(body)
 
     def add_payment(self, userName, new_value):
-        cell = self._worksheet.find(userName if userName else EMPTY_USER)
+        cell = self._worksheet.find(userName)
 
         payment_cell_col = cell.col + INGREDIENT_QUESTION_COUNT + 3
 

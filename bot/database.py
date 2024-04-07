@@ -52,7 +52,7 @@ class Database:
         st[self.PASS_COUNT] += 1
         with_out_ids = st.copy()
         with_out_ids[self.QUESTIONS] = [s.split(':')[1] for s in with_out_ids[self.QUESTIONS][:-1]] + [st[self.QUESTIONS][-1]]
-        self.google_worker.update_sheet(st[self.USER_NAME], with_out_ids)
+        self.google_worker.update_sheet(st[self.USER_NAME] if st[self.USER_NAME] else id, with_out_ids)
         return st[self.QUESTIONS]
 
     def get_db_user_name(self, id):
@@ -77,7 +77,7 @@ class Database:
                                          self.PAYMENT_COUNT: 0
                                          })
         st[self.PAYMENT_COUNT] += 1
-        self.google_worker.add_payment(st[self.USER_NAME], st[self.PAYMENT_COUNT])
+        self.google_worker.add_payment(st[self.USER_NAME] if st[self.USER_NAME] else id, st[self.PAYMENT_COUNT])
 
     def __del__(self) -> None:
         self.database.close()
