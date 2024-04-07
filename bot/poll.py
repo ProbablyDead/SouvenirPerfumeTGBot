@@ -140,7 +140,7 @@ async def answer(message: types.Message, state: FSMContext):
                                                                  "result.jpeg"),
             caption=f'Спасибо за прохождение теста!\
                                    Ты сможешь заказать аромат по цене {PRICE.partition(".")[0]} рублей, нажав *"Заказать аромат"*', 
-                                   reply_markup=reply_keyboard())
+                                   reply_markup=reply_keyboard(), parse_mode="Markdown")
 
         await state.clear()
 
