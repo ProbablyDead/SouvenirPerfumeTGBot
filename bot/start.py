@@ -26,7 +26,7 @@ async def get_contacts(message: types.Message):
     async def callback(succeed: bool):
         if succeed:
             database.add_db_payment(message.from_user.id)
-            await message.answer("Спасибо за покупку!\nДля согласования доставки свяжись, пожалуйста, с ответственным за заказы: @souvenir\_perfume\_order")
+            await message.answer("*Спасибо за покупку!*\nДля согласования доставки свяжись, пожалуйста, с ответственным за заказы: @souvenir\_perfume\_order", parse_mode="Markdown")
         else:
             await message.answer("*К сожалению оплата не прошла.*\n\nЕсли возникла ошибка, напиши, пожалуйста, нашему техническому специалисту: @wrkngYkz", parse_mode="Markdown")
 

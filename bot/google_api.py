@@ -12,7 +12,6 @@ from functools import reduce
 
 load_dotenv()
 
-EMPTY_USER = "__empty__"
 CREDENTIALS_FILE = './secrets/creds.json' 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
