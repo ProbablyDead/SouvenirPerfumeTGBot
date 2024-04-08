@@ -26,10 +26,10 @@ async def get_contacts(message: types.Message):
     async def callback(succeed: bool):
         if succeed:
             database.add_db_payment(message.from_user.id)
-            await message.answer("Спасибо за покупку!\nДля согласования доставки свяжись, пожалуйста, с ответственным за заказы: @souvenir_perfume_order")
+            await message.answer("Спасибо за покупку!\nДля согласования доставки свяжись, пожалуйста, с ответственным за заказы: @souvenir\_perfume\_order")
         else:
             await message.answer("*К сожалению оплата не прошла.*\n\nЕсли возникла ошибка, напиши, пожалуйста, нашему техническому специалисту: @wrkngYkz", parse_mode="Markdown")
 
-    await message.answer(f"Конечно! Вот ссылка для оплаты:\n\n{payment.create_payment(callback, message.from_user.username)},\n\nПосле оплаты ты можешь связаться с ответственным за заказы: @souvenir_perfume_order и договориться о способе получения _(самовывоз метро Таганская, Москва и доставка по России)_, а так же обговорить интересующие тебя вопросы и пожелания касательно аромата\n\n_Срок изготовления 2-5 дней_",
+    await message.answer(f"Конечно! Вот ссылка для оплаты:\n\n{payment.create_payment(callback, message.from_user.username)},\n\nПосле оплаты ты можешь связаться с ответственным за заказы: @souvenir\_perfume\_order и договориться о способе получения _(самовывоз метро Таганская, Москва и доставка по России)_, а так же обговорить интересующие тебя вопросы и пожелания касательно аромата\n\n_Срок изготовления 2-5 дней_",
                         reply_markup=reply_keyboard(), parse_mode="Markdown")
 
