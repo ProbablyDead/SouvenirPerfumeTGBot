@@ -139,7 +139,7 @@ async def answer(message: types.Message, state: FSMContext):
         await message.answer_photo(photo=types.BufferedInputFile(bio.getvalue(),
                                                                  "result.jpeg"),
             caption=f'Спасибо за прохождение теста!\
-                                   Ты сможешь заказать аромат по цене {PRICE.partition(".")[0]} рублей, нажав *"Заказать аромат"*', 
+                                   Ты сможешь заказать этот аромат объемом 6мл по цене {PRICE.partition(".")[0]} рублей, нажав *"Заказать аромат"*', 
                                    reply_markup=reply_keyboard(), parse_mode="Markdown")
 
         await state.clear()
